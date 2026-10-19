@@ -1,0 +1,52 @@
+# Secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+htmlcov/
+.coverage*
+
+# Frontend
+node_modules/
+dist/
+coverage/
+
+# Data, models, generated artifacts, and user traces
+data/
+raw_data/
+processed_data/
+artifacts/
+model_cache/
+checkpoints/
+*.pkl
+*.npy
+*.npz
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.h5
+*.keras
+*.log
+evaluation/reports/generated/
+evaluation/datasets/private/
+logs/
+tmp/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
