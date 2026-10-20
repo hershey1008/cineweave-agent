@@ -1,6 +1,6 @@
 # 完整应用运行指南
 
-使用**已有的真实 FunRec / MovieLens-1M 扩充数据、推荐模型和语义索引**，无需重新训练。首次构建需要下载依赖、容器和 BGE-M3，缓存后可在本地运行规则模式。数据包尚未公开分发，克隆源码本身不包含全部运行材料。
+使用**真实 FunRec / MovieLens-1M 扩充数据与已有推荐模型**，无需重新训练。数据可从第 2 节的上游直链下载；索引可以恢复或自行编码构建。首次构建需要下载依赖、容器和 BGE-M3，缓存后可在本地运行规则模式。我们自己的完整本地包尚未公开分发，克隆源码本身不含推荐模型产物。
 
 ## 1. 环境配置
 
@@ -26,6 +26,12 @@ FRONTEND_DOCKERFILE=dockerfile
 新环境使用标准 Dockerfile；`.local` 文件依赖作者机器的缓存镜像。需要可用端口 13000、18000、18010、15432、16379、19200，均绑定 127.0.0.1。为约 2 GB 的数据/海报、约 2.3 GB 的 BGE-M3、容器和构建缓存预留空间；安装本地包时还需要 zip 与暂存副本空间。
 
 ## 2. 加载已处理数据、模型与索引
+
+### 直接下载 FunRec 数据
+
+[下载 funrec-movielens-1m.zip（约 1.93 GB）](https://funrec-datasets.s3.eu-west-3.amazonaws.com/funrec-movielens-1m.zip)。解压后将 `movies.pkl`、`users.pkl`、`ratings.pkl`、`movie_metadata.pkl` 和 `image/` 整理到 `artifacts/data/`，或将 `.env` 的 `FUNREC_RAW_DATA_PATH` 指向直接包含这些文件的解压目录。
+
+下载与解压命令、字段含义和各步处理说明已写在 [本仓库的数据准备流程](DATA_AND_MODELS.md#下载与处理数据)，无需进入 FunRec 项目。该包已经是处理后的扩充数据，不需要再次转换原始 `*.dat`。接着准备第 3 节的已有推荐模型和语义索引，再执行第 4–6 节的构建、导入和启动。
 
 ### 方式 A：安装可信本地包
 

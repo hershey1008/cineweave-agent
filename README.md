@@ -20,7 +20,7 @@ Vue → FastAPI → LLM 结构化意图 → 会话与硬过滤
 
 需要 **Git、Python 3.11、Docker Engine / Docker Desktop 与 Compose v2**。镜像内安装后端依赖、构建前端；宿主机无需安装 TensorFlow 或 Node.js。
 
-使用**真实 MovieLens-1M 的 FunRec 扩充数据和已有推荐模型**，不需要重新训练。数据包尚未公开分发，需要自己的可信本地快照；原始 1M 不含剧情简介、片长和海报。详见 [数据与模型](docs/DATA_AND_MODELS.md)。
+使用**真实 MovieLens-1M 的 FunRec 扩充数据和已有推荐模型**，不需要重新训练。数据从下面的 FunRec 直链获取；推荐模型需使用已有产物。原始 1M 不含剧情简介、片长和海报。
 
 ### 1. 获取代码、配置环境
 
@@ -32,16 +32,22 @@ python scripts/configure_local.py
 
 生成 `.env` 和独立密码，不覆盖已有配置。真实 LLM 需要填写 `LLM_BASE_URL`、`LLM_MODEL`、`LLM_API_KEY`；留空进入明确标记的规则模式。
 
-### 2. 加载数据、推荐模型与语义索引
+### 2. 准备数据与已有推荐模型
 
-先按 [打包方法](docs/DATA_AND_MODELS.md#制作本地数据包) 从已有快照生成本地包，再在新克隆目录安装：
+直接下载 [FunRec 扩充 MovieLens-1M 数据（ZIP，约 1.93 GB）](https://funrec-datasets.s3.eu-west-3.amazonaws.com/funrec-movielens-1m.zip)。解压后，将四个 pickle 文件和海报目录放到：
 
-```bash
-python scripts/install_local_assets.py /path/to/cineweave-local-assets.zip
-python scripts/pin_index.py
+```text
+artifacts/data/
+├── movies.pkl
+├── users.pkl
+├── ratings.pkl
+├── movie_metadata.pkl
+└── image/
 ```
 
-也可将 `.env` 路径直接指向已有 FunRec 数据和模型目录，见 [完整运行指南](docs/REPRODUCE.md)。
+这是已处理的数据，直接用于本仓库的导入和内容清洗，无需先转换原始 `*.dat`。`.env` 默认 `FUNREC_RAW_DATA_PATH=./artifacts/data`；若保留解压目录，则将该值改为包含 `movies.pkl` 的目录。
+
+将 `FUNREC_MODELS_PATH` 指向已有 `deployed_models` 目录。下载数据不会自动生成 YouTubeDNN / DeepFM 模型；模型目录及本地完整包恢复方法见 [数据与模型](docs/DATA_AND_MODELS.md)。
 
 ### 3. 准备语义编码器、构建镜像
 
@@ -51,7 +57,7 @@ python scripts/download_embedding_model.py
 docker compose build backend semantic frontend
 ```
 
-BGE-M3 首次从官方固定版本下载并校验，之后读取本地缓存。YouTubeDNN / DeepFM 直接加载已有产物；语义索引从本地包恢复。
+BGE-M3 首次从官方固定版本下载并校验，之后读取本地缓存。YouTubeDNN / DeepFM 直接加载已有产物。语义索引可从本地完整包恢复；仅下载数据 ZIP 时，按 [语义索引处理步骤](docs/REPRODUCE.md#3-模型准备) 编码内容并执行 `python scripts/pin_index.py`。
 
 ### 4. 导入数据、启动前后端
 
