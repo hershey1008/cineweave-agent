@@ -1,5 +1,7 @@
 # 目录与相对 FunRec 的改动清单
 
+> 当前实际目录与全部文档请查看 [PROJECT_STRUCTURE.md](../PROJECT_STRUCTURE.md)。下文保留 V1 设计与模块改动说明。
+
 下面保留 V1 设计目录。当前已迁入应用实现；部分数据访问逻辑合并在 Agent 和 API 模块中，独立会话流水线位于 `online/context_pipeline.py`。实际目录和运行情况见根 README 及本地验收记录。
 
 ## 1. 计划目录

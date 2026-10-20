@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "movies": 3883,
+  "users": 6040,
+  "ratings": 1000209,
+  "posters": 3883,
+  "metadata_tables": [
+    "title_crew",
+    "title_principals",
+    "title_akas",
+    "title_ratings",
+    "name_basics"
+  ],
+  "semantic_movies": 3532,
+  "semantic_dimension": 1024,
+  "recall_vectors": [
+    3883,
+    16
+  ],
+  "training_performed": false,
+  "source": "Existing real local FunRec snapshot",
+  "public_data_upload": false,
+  "scope": "Archive restore, source records, references and index integrity; no container startup rerun",
+  "archive_bytes": 1993960021,
+  "archive_sha256": "b7e6f0bcc6952783b9e731ac50077b094e2acdc410f8cddb9c7e6c1b3bb5d4a6",
+  "asset_files": 3914,
+  "unit_tests_passed": 105
+}

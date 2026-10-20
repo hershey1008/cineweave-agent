@@ -25,6 +25,10 @@ def check(root=ROOT):
         checks[name.lower()+'_configured']=len(value)>=16 and 'please-replace' not in value
     raw=Path(env.get('FUNREC_RAW_DATA_PATH','__missing__'))
     models=Path(env.get('FUNREC_MODELS_PATH','__missing__'))
+    if not raw.is_absolute():
+        raw=root/raw
+    if not models.is_absolute():
+        models=root/models
     checks['data_directory']=raw.is_dir()
     checks['movies_pickle']=(raw/'movies.pkl').is_file()
     checks['model_directory']=models.is_dir()

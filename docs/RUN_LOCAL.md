@@ -63,6 +63,8 @@ docker compose up -d --force-recreate backend
 
 ## 从源代码重新准备环境
 
+完整的首次配置、已有数据/模型恢复、数据库导入及前后端启动顺序，以 [完整应用运行指南](REPRODUCE.md) 为准。本次使用本地真实 FunRec 快照和已有推荐模型，不重新训练；本地包格式与分发状态见 [数据与模型](DATA_AND_MODELS.md)。下文保留已有本机路径的准备说明。
+
 前提：Docker Desktop、可访问的模型下载源、本地 FunRec 扩充数据和已有推荐模型产物。模型和数据不在 Git 中。
 
 1. 复制 `.env.example` 为 `.env`，填写本机数据、模型目录和独立数据库密码、JWT secret。
@@ -133,4 +135,4 @@ docker compose run --rm --no-deps backend python -m scripts.verify_failure_modes
 - 电影目录主要来自早期 MovieLens，无法回答目录之外的新片要求。
 - 原有推荐模型产物用于工程集成；未在此任务中重新训练，也不宣称新的离线提升。
 - 120 条检索查询是待人工审核的草案，尚无人工相关性成绩。
-- 真实 LLM 配置与测试按用户后续安排进行。
+- 真实 LLM 配置与已有五轮联调结果见验收记录；新使用者需用自己的接口重新验证。
