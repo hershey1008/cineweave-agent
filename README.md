@@ -20,7 +20,7 @@ Vue → FastAPI → LLM 结构化意图 → 会话与硬过滤
 
 需要 **Git、Python 3.11、Docker Engine / Docker Desktop 与 Compose v2**。镜像内安装后端依赖、构建前端；宿主机无需安装 TensorFlow 或 Node.js。
 
-使用**真实 MovieLens-1M 的 FunRec 扩充数据和已有推荐模型**，不需要重新训练。数据从下面的 FunRec 直链获取；推荐模型需使用已有产物。原始 1M 不含剧情简介、片长和海报。
+使用**真实 MovieLens-1M 的 FunRec 扩充数据**。首次下载按下列步骤训练 YouTubeDNN / DeepFM；已有同一快照的模型才可跳过训练。原始 1M 不含剧情简介、片长和海报。
 
 ### 1. 获取代码、配置环境
 
@@ -32,7 +32,7 @@ python scripts/configure_local.py
 
 生成 `.env` 和独立密码，不覆盖已有配置。真实 LLM 需要填写 `LLM_BASE_URL`、`LLM_MODEL`、`LLM_API_KEY`；留空进入明确标记的规则模式。
 
-### 2. 准备数据与已有推荐模型
+### 2. 下载并准备数据
 
 直接下载 [FunRec 扩充 MovieLens-1M 数据（ZIP，约 1.93 GB）](https://funrec-datasets.s3.eu-west-3.amazonaws.com/funrec-movielens-1m.zip)。解压后，将四个 pickle 文件和海报目录放到：
 
@@ -47,25 +47,45 @@ artifacts/data/
 
 这是已处理的数据，直接用于本仓库的导入和内容清洗，无需先转换原始 `*.dat`。`.env` 默认 `FUNREC_RAW_DATA_PATH=./artifacts/data`；若保留解压目录，则将该值改为包含 `movies.pkl` 的目录。
 
-将 `FUNREC_MODELS_PATH` 指向已有 `deployed_models` 目录。下载数据不会自动生成 YouTubeDNN / DeepFM 模型；模型目录及本地完整包恢复方法见 [数据与模型](docs/DATA_AND_MODELS.md)。
+下载数据不会自动生成推荐模型。默认训练输出为 `artifacts/processed/web_project/deployed_models/`，与 `.env` 的 `FUNREC_MODELS_PATH` 对应；已有模型和完整包恢复方法见 [数据与模型](docs/DATA_AND_MODELS.md)。
 
-### 3. 准备语义编码器、构建镜像
+### 3. 构建镜像
 
 ```bash
-python -m pip install requests
-python scripts/download_embedding_model.py
 docker compose build backend semantic frontend
 ```
 
-BGE-M3 首次从官方固定版本下载并校验，之后读取本地缓存。YouTubeDNN / DeepFM 直接加载已有产物。语义索引可从本地完整包恢复；仅下载数据 ZIP 时，按 [语义索引处理步骤](docs/REPRODUCE.md#3-模型准备) 编码内容并执行 `python scripts/pin_index.py`。
+首次使用标准 Dockerfile，镜像内安装训练依赖；宿主机无需安装 TensorFlow。
 
-### 4. 导入数据、启动前后端
+### 4. 导入数据
 
 ```bash
 docker compose up -d --wait postgres redis elasticsearch
 docker compose run --rm --no-deps backend python -m scripts.seed_cineweave
 docker compose run --rm --no-deps backend python -m scripts.seed_redis_profiles
 docker compose run --rm --no-deps backend python -m scripts.index_movies_elasticsearch
+```
+
+### 5. 训练推荐模型、准备语义索引
+
+首次下载在仓库根目录执行（PowerShell / Bash）：
+
+```bash
+docker compose run --rm --no-deps --env FUNREC_RAW_DATA_PATH=/data --env FUNREC_PROCESSED_DATA_PATH=/training --volume "${PWD}/artifacts/processed:/training" backend python -m offline.pipeline --steps retrieval_preprocess,ranking_preprocess,retrieval_training,ranking_training,deploy
+```
+
+这会依次处理特征、训练 YouTubeDNN / DeepFM 并部署到默认模型目录。各步产物和参数见 [训练说明](docs/DATA_AND_MODELS.md#4-首次下载后的特征处理与模型训练)。已有完整模型可跳过。
+
+```bash
+python -m pip install requests
+python scripts/download_embedding_model.py
+```
+
+随后按 [语义编码与索引](docs/REPRODUCE.md#6-语义编码与索引) 生成电影向量并运行 `python scripts/pin_index.py`；已有完整索引可直接恢复。BGE-M3 使用固定预训练权重。
+
+### 6. 启动前后端
+
+```bash
 docker compose up -d --wait semantic
 docker compose up -d backend frontend
 docker compose ps

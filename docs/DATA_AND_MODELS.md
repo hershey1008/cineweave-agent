@@ -47,7 +47,7 @@ FUNREC_PROCESSED_DATA_PATH=./artifacts/processed
 
 ### 3. 在当前仓库完成数据处理
 
-先按 [环境与镜像配置](REPRODUCE.md#4-构建镜像和基础设施) 构建服务、启动基础设施，然后在 CineWeave 根目录执行：
+先按 [环境与镜像配置](REPRODUCE.md#3-构建镜像和基础设施) 构建服务、启动基础设施，然后在 CineWeave 根目录执行：
 
 ```bash
 docker compose run --rm --no-deps backend python -m scripts.seed_cineweave
@@ -63,17 +63,66 @@ docker compose run --rm --no-deps backend python -m scripts.index_movies_elastic
 | 语义内容清洗 | 解码 HTML 实体、规整空白、合并中英文别名、整理类型/年份/片长，隔离非 `movie` 关联 | 电影内容文档和质量清单 |
 | BGE-M3 编码 | 使用固定编码器生成归一化向量，校验文件哈希与完整性后发布版本 | `artifacts/semantic_index/<version>/` |
 
-最后两步由 `python -m semantic_service.offline.build_index` 一起完成；安装依赖、环境变量和完整命令见 [当前仓库的语义索引步骤](REPRODUCE.md#3-模型准备)。有已验证的现成索引时直接恢复，无需重复编码。
+最后两步由 `python -m semantic_service.offline.build_index` 一起完成；安装依赖、环境变量和完整命令见 [当前仓库的语义索引步骤](REPRODUCE.md#6-语义编码与索引)。有已验证的现成索引时直接恢复，无需重复编码。
 
-### 4. 接入已有模型并启动
+### 4. 首次下载后的特征处理与模型训练
 
-数据 ZIP 与推荐模型部署产物是两类材料。将已有 `deployed_models` 放到上述配置目录，或让 `FUNREC_MODELS_PATH` 指向其现有位置；格式见 [模型与索引目录](#模型与索引目录)。本次不重新训练，也不将数据导入或向量编码写成模型训练。
+首次下载的 ZIP 只有扩充数据，没有已训练的 YouTubeDNN / DeepFM。完成镜像构建和数据导入后，在 CineWeave **仓库根目录**执行：
 
-数据、模型和索引齐备后，按 [前后端启动](REPRODUCE.md#6-前后端启动) 运行即可。已有完整本地包则可以跳过下载/导入材料整理，使用下文的恢复流程。
+```bash
+docker compose run --rm --no-deps --env FUNREC_RAW_DATA_PATH=/data --env FUNREC_PROCESSED_DATA_PATH=/training --volume "${PWD}/artifacts/processed:/training" backend python -m offline.pipeline --steps retrieval_preprocess,ranking_preprocess,retrieval_training,ranking_training,deploy
+```
+
+这条命令适用于 PowerShell 和 Bash。`${PWD}` 表示当前仓库根目录；将本机 `artifacts/processed/` 以可写方式挂载到容器 `/training`。`/data` 使用 Compose 已配置的真实数据挂载。显式覆盖容器内两个路径，避免将宿主机路径传给容器，或向在线服务的只读 `/models` 挂载写入。
+
+首次构建使用以下 `.env` 路径，使训练输出和在线服务读取同一目录：
+
+```dotenv
+FUNREC_RAW_DATA_PATH=./artifacts/data
+FUNREC_PROCESSED_DATA_PATH=./artifacts/processed
+FUNREC_MODELS_PATH=./artifacts/processed/web_project/deployed_models
+```
+
+| 实际步骤名 | 工作 | 主要产物（相对 `artifacts/processed/web_project/`） |
+| --- | --- | --- |
+| `retrieval_preprocess` | 编码用户/电影特征，按时间构建行为序列与下一物品样本 | `train_eval_sample_final.pkl`、`feature_dict.pkl`、`vocab_dict.pkl` |
+| `ranking_preprocess` | 构建评分衍生标签与离线模拟负样本，输出逐点排序样本 | `ranking_train_eval_sample.pkl`、`ranking_feature_dict.pkl`、`ranking_vocab_dict.pkl` |
+| `retrieval_training` | 训练 YouTubeDNN，保存用户塔/物品塔并生成归一化物品向量 | `saved_models/user_model/`、`saved_models/item_model/`、`item_embeddings.npy`、`movie_ids.npy` |
+| `ranking_training` | 独立训练 DeepFM，输出排序模型与配置 | `saved_models/ranking_model/`、`ranking_model_config.pkl` |
+| `deploy` | 复制模型、词表、向量与配置，写入活动版本指针 | `deployed_models/` |
+
+`--steps` 使用表中的实际步骤名，按依赖顺序执行。要续跑时可改为某个步骤或其后的步骤列表，前提是前序产物已经齐全。Redis 已由数据导入步骤的 `seed_redis_profiles` 初始化，因此这里不重复执行离线 `ingest`。
+
+默认参数在 `backend/offline/config.py`：3 epochs、batch size 128、embedding 16 维、召回负采样 20、学习率 0.001。网络结构分别在 `train_retrieval.py`（YouTubeDNN `[64, 32]`）和 `train_ranking.py`（DeepFM `[128, 64, 32]`）中配置。MovieLens 是显式评分数据；排序脚本生成的二分类标签及负样本用于离线实验，不能解释为真实曝光点击率。
+
+训练会在终端输出损失与现有评估器的指标，运行时间取决于本机 CPU、Docker 内存与样本量；本次文档整理没有重新执行训练，也没有产生新的质量指标。上述步骤会写入配置的输出目录，已有可用模型时走“复用已有模型”路径，不必重复执行。
+
+部署后至少检查：
+
+```text
+artifacts/processed/web_project/deployed_models/
+├── vocab_dict.pkl
+├── item_embeddings.npy
+├── movie_ids.npy
+├── ranking/{vocab_dict.pkl,feature_dict.pkl,model_config.pkl}
+└── model/
+    ├── user_recall/active.json
+    ├── user_recall/v1/user_model/saved_model.pb
+    ├── ranking/active.json
+    └── ranking/v1/ranking_model/saved_model.pb
+```
+
+SavedModel 的 `variables/` 目录也必须完整。文件落盘检查不等于推理成功；启动应用后用历史账号发起推荐，检查模型加载日志、YouTubeDNN 通道和 DeepFM 信号。缺少模型时出现的降级结果不能作为训练成功验收。
+
+已有同一数据快照的 `deployed_models/` 时，将 `FUNREC_MODELS_PATH` 指向它即可跳过训练；这只适用于已经持有模型产物的使用者，不是首次下载数据的默认路径。
+
+### 5. 准备语义索引并启动
+
+YouTubeDNN / DeepFM 训练完成后，继续下载 BGE-M3、编码电影内容并固定索引版本，最后启动应用。BGE-M3 使用固定预训练权重，不在本项目重新训练；它的 1024 维语义向量与 YouTubeDNN 的 16 维物品向量是独立产物。具体命令见 [语义编码与索引](REPRODUCE.md#6-语义编码与索引) 和 [前后端启动](REPRODUCE.md#7-前后端启动)。
 
 ## 当前本地快照
 
-本次使用作者本机 **FunRec 已处理的真实 MovieLens-1M 数据及现有模型**，不重新训练，不生成虚构电影，不采集当前应用的聊天记录或账号数据。
+下表是作者本机 **真实 FunRec / MovieLens-1M 数据及已有模型**的快照。首次下载者需要按上文完成训练；持有同一快照模型者可以跳过。这里不使用虚构电影，也不打包当前应用的聊天记录或账号数据。
 
 | 内容 | 本地核对结果 |
 | --- | ---: |
@@ -191,6 +240,6 @@ artifacts/
 
 BGE-M3 通过 `python scripts/download_embedding_model.py` 从官方固定版本获取，或拷入自己已验证的同版本缓存。编码器权重、索引 manifest revision、文件哈希及后端 `SEMANTIC_INDEX_VERSION` 必须相符。
 
-## 训练代码保留在哪里
+## 训练代码位置
 
-`backend/offline/feature/`、`backend/offline/training/`、`backend/offline/storage/` 保留特征、YouTubeDNN / DeepFM 训练和部署代码。当前交付采用现有模型产物，不执行这些训练入口；本次没有新的训练结果或效果提升结论。需要研究训练链路时应使用独立输出目录，并审查样本划分、评分标签与负采样口径。
+`backend/offline/feature/`、`backend/offline/training/`、`backend/offline/storage/` 分别负责特征、YouTubeDNN / DeepFM 训练和部署；`backend/offline/pipeline.py` 串联实际步骤。首次构建按上文执行，已有模型可以跳过。本次只补齐文档，不重新训练当前本机模型；研究效果时还需审查样本划分、评分标签与负采样口径。
