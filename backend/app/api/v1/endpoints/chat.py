@@ -13,6 +13,7 @@ from app.core.auth import get_current_user
 from app.models import ChatSession, ChatTurn, RecommendationEvent, RecommendationFeedback, User
 from app.agent.schemas import EventRequest, FeedbackRequest, MessageRequest, SessionState
 from app.agent.orchestrator import own_session, process_message
+from app.agent.timeouts import chat_timeout_seconds
 
 router = APIRouter()
 
@@ -50,7 +51,7 @@ async def send_message(session_id: str, request: MessageRequest,
                        db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     try:
         return await asyncio.wait_for(process_message(db, user, session_id, request),
-                                       timeout=float(os.getenv("CHAT_TIMEOUT", "20")))
+                                       timeout=chat_timeout_seconds())
     except asyncio.TimeoutError:
         db.rollback()
         raise HTTPException(504, "本轮处理超时，状态未提交。请使用相同消息 ID 重试。") from None

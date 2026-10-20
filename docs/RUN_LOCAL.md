@@ -48,6 +48,7 @@
 LLM_BASE_URL=https://your-provider.example/v1
 LLM_MODEL=your-model-name
 LLM_API_KEY=your-local-secret
+LLM_TIMEOUT_SECONDS=45
 ```
 
 接入服务需支持 `/chat/completions` 与 JSON 输出契约。后端使用受限结构化意图解析，参数校验后执行工具。配置后重新创建后端容器以加载环境：
@@ -55,6 +56,8 @@ LLM_API_KEY=your-local-secret
 ```powershell
 docker compose up -d --force-recreate backend
 ```
+
+当前 LLM 意图请求和最多一次 JSON 修复共享 45 秒总预算，连接上限 5 秒；外层聊天截止至少为 LLM 预算加 15 秒（默认有效值 60 秒，即使旧 `.env` 中 `CHAT_TIMEOUT=20`）；前端与 Nginx 等待上限均为 65 秒。`LLM_TIMEOUT_SECONDS` 可在本机 `.env` 中调整；若提高到 45 秒以上，也需相应调整前端和代理预算。网络超时不自动重试、不自动切回规则模式；失败轮次不保存会话修改。页面会区分超时、鉴权、限流、响应协议错误。
 
 密钥不写入前端、不输出到日志、不提交 Git。真实服务接入后需另外执行端到端测试；现有本地规则测试不能替代它。
 

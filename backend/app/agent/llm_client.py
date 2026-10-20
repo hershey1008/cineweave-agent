@@ -1,11 +1,14 @@
+import asyncio
 import json
 import os
 import re
+import time
 
 import httpx
 
 from .prompts import INTENT_SYSTEM
 from .schemas import IntentPatch, SessionState
+from .timeouts import llm_timeout_seconds
 
 GENRE_WORDS = {"科幻": "Sci-Fi", "喜剧": "Comedy", "恐怖": "Horror", "悬疑": "Mystery",
                "惊悚": "Thriller", "动画": "Animation", "爱情": "Romance", "动作": "Action",
@@ -135,6 +138,14 @@ def parse_rules(text: str, state: SessionState) -> IntentPatch:
     return patch
 
 
+class LLMServiceError(Exception):
+    """Safe public error; never forward provider bodies or credentials."""
+    def __init__(self, detail, *, status_code=503, kind="unavailable"):
+        super().__init__(detail)
+        self.status_code = status_code
+        self.kind = kind
+
+
 class LLMClient:
     @property
     def mode(self):
@@ -148,22 +159,51 @@ class LLMClient:
             raise ValueError("请配置可信的 LLM_BASE_URL")
         messages = [{"role": "system", "content": INTENT_SYSTEM},
                     {"role": "user", "content": json.dumps({"state": state.model_dump(), "message": text}, ensure_ascii=False)}]
+        budget = llm_timeout_seconds()
         tokens = 0
-        async with httpx.AsyncClient(timeout=8.0, trust_env=False) as client:
-            for attempt in range(2):
-                response = await client.post(base + "/chat/completions",
-                    headers={"Authorization": "Bearer " + os.environ["LLM_API_KEY"]},
-                    json={"model": os.environ["LLM_MODEL"], "messages": messages,
-                          "temperature": 0, "response_format": {"type": "json_object"}})
-                response.raise_for_status()
-                data = response.json()
-                tokens += data.get("usage", {}).get("total_tokens", 0)
-                content = data["choices"][0]["message"]["content"]
-                try:
-                    patch = IntentPatch.model_validate_json(content)
-                    return patch, {"mode": "llm", "calls": attempt + 1, "tokens": tokens,
-                                   "model": os.environ["LLM_MODEL"]}
-                except (ValueError, TypeError):
-                    messages += [{"role": "assistant", "content": content},
-                                 {"role": "user", "content": "输出不符合约定，请只返回符合字段定义的 JSON。"}]
-        raise ValueError("LLM 意图结构无效，请重试或简化条件")
+        started = time.perf_counter()
+        try:
+            # The first call and optional JSON repair share one total deadline.
+            # Timeout/network failures are not automatically retried or relabelled as rules.
+            async with asyncio.timeout(budget):
+                async with httpx.AsyncClient(timeout=httpx.Timeout(budget, connect=min(5, budget)), trust_env=False) as client:
+                    for attempt in range(2):
+                        response = await client.post(base + "/chat/completions",
+                            headers={"Authorization": "Bearer " + os.environ["LLM_API_KEY"]},
+                            json={"model": os.environ["LLM_MODEL"], "messages": messages,
+                                  "temperature": 0, "response_format": {"type": "json_object"}})
+                        response.raise_for_status()
+                        try:
+                            data = response.json()
+                            content = data["choices"][0]["message"]["content"]
+                            if not isinstance(content, str):
+                                raise TypeError("Expected string content")
+                        except (ValueError, KeyError, IndexError, TypeError):
+                            raise LLMServiceError("LLM 接口响应格式不兼容，请检查服务商接口与模型配置。", status_code=502, kind="protocol") from None
+                        usage = data.get("usage") or {}
+                        used = usage.get("total_tokens", 0) if isinstance(usage, dict) else 0
+                        tokens += used if isinstance(used, int) else 0
+                        try:
+                            patch = IntentPatch.model_validate_json(content)
+                            return patch, {"mode": "llm", "calls": attempt + 1, "tokens": tokens,
+                                "model": os.environ["LLM_MODEL"], "timeout_seconds": budget,
+                                "elapsed_ms": round((time.perf_counter() - started) * 1000, 2)}
+                        except (ValueError, TypeError):
+                            messages += [{"role": "assistant", "content": content},
+                                {"role": "user", "content": "输出不符合约定，请只返回符合字段定义的 JSON。"}]
+        except (TimeoutError, httpx.TimeoutException):
+            raise LLMServiceError(f"LLM 响应超时（本轮等待预算 {budget:g} 秒），本轮未保存，请稍后重试。", status_code=504, kind="timeout") from None
+        except httpx.HTTPStatusError as exc:
+            status = exc.response.status_code
+            if status in {401, 403}:
+                detail, kind = "LLM 鉴权失败，请检查 API 密钥与模型访问权限。", "authentication"
+            elif status == 429:
+                detail, kind = "LLM 服务商限流或额度不足，请稍后重试或检查服务商账户。", "rate_limit"
+            elif status in {400, 404, 422}:
+                detail, kind = "LLM 服务商拒绝了请求，请检查接口地址、模型 ID 与 JSON 输出支持。", "configuration"
+            else:
+                detail, kind = "LLM 服务商暂不可用，请稍后重试。", "provider"
+            raise LLMServiceError(detail, kind=kind) from None
+        except httpx.RequestError:
+            raise LLMServiceError("无法连接 LLM 服务，请检查接口地址和网络后重试。", kind="connection") from None
+        raise LLMServiceError("LLM 连续返回无效意图结构，本轮未保存，请重试。", status_code=502, kind="invalid_output")

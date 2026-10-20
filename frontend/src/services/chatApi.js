@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const chat = axios.create({ baseURL: '/api', timeout: 25000 })
+const chat = axios.create({ baseURL: '/api', timeout: 65000 })
 chat.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
   if (token) config.headers.Authorization = `Bearer ${token}`

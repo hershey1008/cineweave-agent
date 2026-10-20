@@ -16,7 +16,7 @@ function Copy-RelativeFile([string]$relative) {
 $files = & git -c "safe.directory=$sourceRoot" -C $sourceRoot ls-files --cached --others --exclude-standard
 if ($LASTEXITCODE -ne 0) { throw 'Could not enumerate project source files.' }
 foreach ($file in $files) { if (Test-Path -LiteralPath (Join-Path $sourceRoot $file) -PathType Leaf) { Copy-RelativeFile $file } }
-if (Test-Path -LiteralPath (Join-Path $sourceRoot '.env')) { Copy-RelativeFile '.env' }
+if ((Test-Path -LiteralPath (Join-Path $sourceRoot '.env')) -and -not (Test-Path -LiteralPath (Join-Path $targetRoot '.env'))) { Copy-RelativeFile '.env' }
 foreach ($folder in @('frontend\dist', 'evaluation\reports\generated')) {
     $path = Join-Path $sourceRoot $folder
     if (Test-Path -LiteralPath $path) {

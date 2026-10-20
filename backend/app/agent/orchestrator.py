@@ -15,7 +15,7 @@ from online.context import RecommendationContext
 from online.context_pipeline import recommend_context
 from online.filtering import satisfies
 from .explanation_service import explain
-from .llm_client import LLMClient
+from .llm_client import LLMClient, LLMServiceError
 from .schemas import SessionState
 from .session_service import apply_patch
 from .tools import movie_facts, resolve_titles, user_context
@@ -57,6 +57,9 @@ async def process_message(db, user, session_id, request):
     try:
         patch, llm_trace = await client.parse(request.message, initial)
         state = apply_patch(initial, patch)
+    except LLMServiceError as exc:
+        logger.warning("cineweave_llm_failure request_id=%s kind=%s status=%s", request_id, exc.kind, exc.status_code)
+        raise HTTPException(exc.status_code, str(exc)) from None
     except ValidationError as exc:
         message = exc.errors()[0].get("msg", "选片条件无效")
         raise HTTPException(422, message.removeprefix("Value error, ")) from None
