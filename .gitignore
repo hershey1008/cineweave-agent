@@ -47,6 +47,9 @@ evaluation/datasets/private/
 logs/
 tmp/
 .runtime/
+docs/media/*.mp4
+docs/media/*.wav
+docs/media/rendered/
 
 # Editors / OS
 .idea/

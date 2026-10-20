@@ -1,0 +1,23 @@
+CineWeave source and documentation licensing notice
+
+This repository adapts Datawhale FunRec, whose upstream README declares
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+(CC BY-NC-SA 4.0):
+https://github.com/datawhalechina/fun-rec#license
+
+The redistributed adaptation and CineWeave additions are made available
+under CC BY-NC-SA 4.0, subject to third-party components' own terms.
+Retain attribution, identify modifications, and share adaptations under
+the same license. No commercial-use permission is granted here.
+
+Full license text: licenses/CC-BY-NC-SA-4.0.txt
+Canonical legal code:
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en
+
+Attribution and modification details: THIRD_PARTY_NOTICES.md and
+docs/CONTRIBUTIONS.md. No endorsement by upstream authors is implied.
+
+Dataset files, movie posters, movie descriptions, external model weights,
+and third-party dependencies are not relicensed by this notice. They retain
+their respective rights and conditions. The repository does not distribute
+the source datasets or model weights.

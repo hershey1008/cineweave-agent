@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-20",
+  "unit_tests": {
+    "passed": 96,
+    "command": "python -m pytest -q"
+  },
+  "live_rules_smoke": {
+    "passed": 27,
+    "total": 27
+  },
+  "rules_conversations": {
+    "passed": 40,
+    "cases": 40,
+    "turns": 120
+  },
+  "llm_functional_regression": {
+    "passed": true,
+    "turns": 5,
+    "latency_seconds": [
+      12.92,
+      14.8,
+      8.2,
+      9.21,
+      6.29
+    ]
+  },
+  "warm_rules_performance": {
+    "count": 200,
+    "concurrency": 5,
+    "successful_http": 200,
+    "degraded_responses": 0,
+    "p50_ms": 441.35010000900365,
+    "p95_ms": 602.912714946433,
+    "cache_policy": "10 mixed query texts warmed before measurement"
+  },
+  "data_scope": {
+    "source_rows": 3883,
+    "semantic_movie_rows": 3532,
+    "quarantined_non_movie_rows": 351
+  },
+  "limits": [
+    "No human relevance labels",
+    "No claimed nDCG or business uplift",
+    "Pretrained recommenders reused; not retrained in this implementation",
+    "Local CPU rule-mode latency is not LLM latency",
+    "Five LLM turns do not establish a general success rate"
+  ]
+}

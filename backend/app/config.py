@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     debug: bool = False
     
     # 数据库配置
-    database_url: str = "postgresql://funrec:funrec123@localhost:5432/funrec_db"
+    database_url: str = "postgresql+psycopg2://cineweave:please-replace@localhost:15432/cineweave"
     
     # Redis 配置
     redis_url: str = "redis://localhost:6379/0"

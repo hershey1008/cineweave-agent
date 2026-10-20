@@ -2,11 +2,11 @@
 
 ## 项目来源
 
-CineWeave（影织）计划扩展 [Datawhale FunRec](https://github.com/datawhalechina/fun-rec) 的电影推荐 Web 项目。当前仓库是新的文档和后续代码承载仓库，与已有 `movie_recsystem` 区分。
+CineWeave（影织）扩展 [Datawhale FunRec](https://github.com/datawhalechina/fun-rec) 的电影推荐 Web 项目。本仓库承载新增应用代码、设计、测试与演示材料，与已有 `movie_recsystem` 区分。
 
-2026-10-19 已检查原本地 FunRec 的召回、在线流水线、DeepFM 输入、数据库字段、API、前端 API、依赖和 Compose。上述源码检查用于制定方案，不表示本仓库已包含或实现这些模块。
+2026-10-19 检查原本地 FunRec 的召回、在线流水线、DeepFM 输入、数据库字段、API、前端 API、依赖和 Compose，形成设计基线。2026-10-20 完成本地 V1 实现和真实 LLM 小规模联调；复用与新增见 [CONTRIBUTIONS.md](CONTRIBUTIONS.md)。
 
-初始文档提交未复制上游应用源码。2026-10-20 本地实现复用了必要源码，见根目录 `THIRD_PARTY_NOTICES.md`；未自动将应用源码推送到 GitHub，也未上传数据、模型或凭据。分发继承源码前需核对适用许可。当前未为整体应用指定开源许可证。
+初始提交仅包含设计文档。发布整理保留了上游 README 声明的 CC BY-NC-SA 4.0 许可、完整许可文本与修改说明，见根目录 `LICENSE`、`THIRD_PARTY_NOTICES.md`。原始数据、模型权重和凭据不包含在发布源码中；第三方资产保留其自身条件。
 
 ## 原始数据与扩充数据
 

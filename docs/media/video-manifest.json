@@ -1,0 +1,13 @@
+{
+  "method": "Actual application screenshots edited into a narrated walkthrough; not a continuous screen recording.",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "duration_seconds": 129.707,
+  "chapters": 9,
+  "voice": "Microsoft Huihui local TTS",
+  "bytes": 3560806,
+  "codec": "H.264 + AAC",
+  "recording_date": "2026-10-20",
+  "captions": "cineweave-demo.zh-CN.srt"
+}
