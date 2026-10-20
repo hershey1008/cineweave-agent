@@ -1,0 +1,1 @@
+"""CineWeave semantic retrieval service."""

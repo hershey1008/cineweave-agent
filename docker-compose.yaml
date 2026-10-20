@@ -1,0 +1,96 @@
+name: cineweave
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: cineweave
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      POSTGRES_DB: cineweave
+    ports: ["127.0.0.1:15432:5432"]
+    volumes: ["cineweave_postgres:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cineweave -d cineweave"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:16379:6379"]
+    volumes: ["cineweave_redis:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.0
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: -Xms384m -Xmx384m
+    ports: ["127.0.0.1:19200:9200"]
+    volumes: ["cineweave_elasticsearch:/usr/share/elasticsearch/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+  semantic:
+    build:
+      context: ./semantic_service
+      dockerfile: ${SEMANTIC_DOCKERFILE:-Dockerfile}
+    environment:
+      SEMANTIC_INDEX_ROOT: /index
+      HF_HOME: /models
+      EMBEDDING_MODEL_PATH: /models/bge-m3
+      HF_HUB_DISABLE_XET: "1"
+      USE_TF: "0"
+      EMBEDDING_THREADS: "4"
+    ports: ["127.0.0.1:18010:8010"]
+    volumes:
+      - ./artifacts/semantic_index:/index:ro
+      - ./artifacts/model_cache:/models
+      - ${FUNREC_RAW_DATA_PATH}:/data:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import json,urllib.request; assert json.load(urllib.request.urlopen('http://localhost:8010/health'))['ready']"]
+      interval: 15s
+      timeout: 5s
+      start_period: 120s
+      retries: 20
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ${BACKEND_DOCKERFILE:-Dockerfile}
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://cineweave:${DB_PASSWORD}@postgres:5432/cineweave
+      REDIS_URL: redis://redis:6379/0
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      MODEL_DEPLOY_DIR: /models
+      DATA_DIR: /data
+      POSTER_DIR: /data/image
+      SEMANTIC_URL: http://semantic:8010
+      PYTHONPATH: /app:/app/vendor
+      TF_USE_LEGACY_KERAS: "1"
+      TF_NUM_INTRAOP_THREADS: "2"
+      TF_NUM_INTEROP_THREADS: "2"
+      OMP_NUM_THREADS: "2"
+    ports: ["127.0.0.1:18000:8000"]
+    volumes:
+      - ./backend:/app
+      - ${FUNREC_RAW_DATA_PATH}:/data:ro
+      - ${FUNREC_MODELS_PATH}:/models:ro
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      elasticsearch: {condition: service_healthy}
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ${FRONTEND_DOCKERFILE:-dockerfile}
+    ports: ["127.0.0.1:13000:80"]
+    depends_on: [backend]
+volumes:
+  cineweave_postgres:
+  cineweave_redis:
+  cineweave_elasticsearch:

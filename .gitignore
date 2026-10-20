@@ -10,6 +10,8 @@ credentials*.json
 __pycache__/
 *.py[cod]
 .venv/
+.semantic-venv/
+.uv-cache/
 venv/
 .pytest_cache/
 .mypy_cache/
@@ -44,6 +46,7 @@ evaluation/reports/generated/
 evaluation/datasets/private/
 logs/
 tmp/
+.runtime/
 
 # Editors / OS
 .idea/

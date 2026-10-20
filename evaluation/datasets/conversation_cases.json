@@ -1,0 +1,1682 @@
+[
+  {
+    "case_id": "conversation-01",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的科幻片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-02",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的喜剧片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-03",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的动作片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-04",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的爱情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-05",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的冒险片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-06",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的剧情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-07",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的犯罪片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-08",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "90分钟以内的悬疑片，不要恐怖片",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 90,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-09",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的科幻片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-10",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的喜剧片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-11",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的动作片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-12",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的爱情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-13",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的冒险片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-14",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的剧情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-15",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的犯罪片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-16",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "100分钟以内的悬疑片，不要恐怖片",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 100,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-17",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的科幻片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-18",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的喜剧片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-19",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的动作片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-20",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的爱情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-21",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的冒险片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-22",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的剧情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-23",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的犯罪片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-24",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "110分钟以内的悬疑片，不要恐怖片",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 110,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-25",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的科幻片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-26",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的喜剧片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-27",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的动作片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-28",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的爱情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-29",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的冒险片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-30",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的剧情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-31",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的犯罪片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-32",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "120分钟以内的悬疑片，不要恐怖片",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 120,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-33",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的科幻片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Sci-Fi"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-34",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的喜剧片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Comedy"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-35",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的动作片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Action"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-36",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的爱情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Romance"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-37",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的冒险片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Adventure"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-38",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的剧情片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Drama"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-39",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的犯罪片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Crime"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "conversation-40",
+    "mode": "rules_functional_fixture",
+    "turns": [
+      {
+        "message": "130分钟以内的悬疑片，不要恐怖片",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "轻松一点",
+        "expect": {
+          "runtime_max": 130,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      },
+      {
+        "message": "时长不限了",
+        "expect": {
+          "runtime_max": null,
+          "include_genres": [
+            "Mystery"
+          ],
+          "exclude_genres": [
+            "Horror"
+          ]
+        }
+      }
+    ]
+  }
+]
