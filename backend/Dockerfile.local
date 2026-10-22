@@ -1,7 +1,7 @@
 # Local acceleration: reuse the already installed FunRec TensorFlow image.
 FROM web_project-backend:latest
 WORKDIR /app
-RUN uv pip install --system httpx==0.28.1 pytest pytest-asyncio bcrypt==4.0.1
+RUN uv pip install --system httpx==0.28.1 pytest pytest-asyncio bcrypt==4.0.1 langgraph==1.2.16
 ENV PYTHONUNBUFFERED=1 PYTHONPATH=/app:/app/vendor TF_USE_LEGACY_KERAS=1
 COPY . .
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

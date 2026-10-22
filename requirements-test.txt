@@ -4,3 +4,10 @@ pydantic>=2.7,<3
 httpx==0.28.1
 numpy==1.26.4
 pandas==2.0.3
+redis>=5,<8
+elasticsearch>=9.2,<10
+pydantic-settings>=2,<3
+langgraph==1.2.16
+fastapi>=0.115,<1
+sqlalchemy>=2,<3
+psycopg2-binary>=2.9,<3

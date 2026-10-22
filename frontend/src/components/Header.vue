@@ -1,23 +1,23 @@
 <template>
-  <header class="fixed top-0 w-full z-50 transition-all duration-300" :class="{ 'bg-white shadow-md': scrolled, 'bg-gradient-to-b from-white/90 to-transparent': !scrolled }">
-    <div class="flex items-center justify-between px-8 py-4">
+  <header class="site-header fixed top-0 w-full z-50 bg-white border-b border-gray-200 transition-shadow duration-300" :class="{ 'shadow-md': scrolled }">
+    <div class="flex h-20 items-center justify-between gap-3 px-4 sm:px-8">
       <!-- Logo -->
-      <div class="flex items-center space-x-8">
+      <div class="flex items-center gap-4 lg:gap-8">
         <router-link to="/" class="flex items-center">
-          <h1 class="text-datawhale-blue text-3xl font-bold tracking-tight">CineWeave</h1>
+          <span class="text-datawhale-blue text-xl sm:text-3xl font-bold tracking-tight">CineWeave</span>
         </router-link>
         
         <!-- 导航栏 -->
-        <nav class="hidden md:flex space-x-6">
-          <router-link to="/" class="text-gray-700 hover:text-datawhale-blue transition-colors">
+        <nav aria-label="主导航" class="flex gap-3 lg:gap-6 text-xs sm:text-sm">
+          <router-link to="/" class="site-nav-link text-gray-700 hover:text-datawhale-blue transition-colors">
             对话选片
           </router-link>
-          <router-link to="/browse" class="text-gray-700 hover:text-datawhale-blue transition-colors">探索电影库</router-link>
+          <router-link to="/browse" class="site-nav-link text-gray-700 hover:text-datawhale-blue transition-colors">探索电影库</router-link>
         </nav>
       </div>
 
       <!-- 右侧 - 统计信息、搜索、管理员、认证 -->
-      <div class="flex items-center space-x-6">
+      <div class="flex items-center gap-3 lg:gap-6">
         <!-- 统计信息 -->
         <div v-if="stats" class="hidden md:flex items-center space-x-4 text-sm text-gray-500">
           <span>{{ stats.movies?.toLocaleString() }} Movies</span>
@@ -29,7 +29,7 @@
         <button
           v-if="authStore.isAuthenticated"
           @click="openSearch"
-          class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-datawhale-blue transition-colors"
+          class="hidden sm:flex w-8 h-8 items-center justify-center text-gray-600 hover:text-datawhale-blue transition-colors"
           title="Search Movies (Ctrl+K)"
         >
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +72,7 @@
             to="/auth"
             class="px-4 py-2 bg-datawhale-blue text-white font-semibold rounded hover:bg-blue-700 transition-colors"
           >
-            Sign In
+            登录
           </router-link>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import logging
-import json
 from typing import List, Dict, Any
+import redis
+
+from app.config import settings
 from app.services.elasticsearch_service import es_service
 from .base import RecallStrategy
 
@@ -67,6 +69,19 @@ class GlobalTrendingRecallStrategy(RecallStrategy):
             return []
 
 class UserPreferenceRecallStrategy(RecallStrategy):
+    def __init__(self):
+        # 与 RecallService 使用相同的 Redis 配置和字符串解码约定。
+        try:
+            self.redis_client = redis.Redis.from_url(
+                settings.redis_url,
+                decode_responses=True,
+                socket_timeout=0.3,
+                socket_connect_timeout=0.3,
+            )
+        except Exception as e:
+            logger.warning(f"用户偏好召回 Redis 初始化失败: {e}")
+            self.redis_client = None
+
     async def recall(self, user_context: Dict[str, Any], k: int) -> List[Dict[str, Any]]:
         """
         基于用户偏好类型召回电影（从历史行为中推断）
@@ -75,27 +90,24 @@ class UserPreferenceRecallStrategy(RecallStrategy):
             return []
             
         try:
-            # 1. 从历史行为推断用户偏好类型
-            # user_context["hist_genres"] 可能已经在上下文丰富阶段填充
-            # 但通常我们只有 hist_movie_ids
-            # 在实际系统中，我们会从 Redis 用户画像中获取
-            # 这里尝试从上下文获取或进行推断
-            
-            # 假设 user_context 包含 'genres' 或者需要查找
-            # 简化处理：如果没有类型信息则跳过
-            # 但是 YouTubeDNN 策略构建了 inputs['hist_genres']
-            # 假设调用方（RecallService）丰富了上下文或者我们访问 ResourceManager
-            
-            # 简单方法：如果传入的上下文有明确的偏好（例如来自 UI）
-            # 或者查看 hist_movie_ids 并映射到类型
-            
-            # TODO: 实现从 Redis 查询用户画像偏好
-            
+            # 1. 上下文中的实时偏好优先；缺失时读取已有 Redis 用户画像。
             frequent_genres = user_context.get("frequent_genres", [])
-            
             if not frequent_genres:
-                # 降级处理：如果有历史记录，可以从中随机选择类型
-                # 目前如果没有偏好信号则返回空
+                user_id = user_context.get("user_id")
+                if user_id is not None and self.redis_client is not None:
+                    try:
+                        frequent_genres = self.redis_client.hget(
+                            f"user:{user_id}:profile", "frequent_genres"
+                        ) or []
+                    except Exception as e:
+                        logger.warning(f"用户偏好召回读取 Redis 画像失败: {e}")
+
+            # 与 RecallService 保持一致：画像字段是逗号分隔的类型名称。
+            if isinstance(frequent_genres, str):
+                frequent_genres = [g.strip() for g in frequent_genres.split(",") if g.strip()]
+
+            if not frequent_genres:
+                # 无画像或 Redis 不可用时跳过本通道，由其他召回通道补充。
                 return []
                 
             # 2. 查询 ES

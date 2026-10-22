@@ -1,0 +1,166 @@
+{
+  "generated_at": "2026-10-22T06:08:39.080376+00:00",
+  "scope": "deterministic orchestration fixtures; no live LLM, database or retrieval",
+  "python": "3.11.14",
+  "langgraph": "1.2.16",
+  "cases": 13,
+  "repeats": 30,
+  "pairs": 390,
+  "mismatches": [],
+  "parser_calls_per_turn": 1,
+  "latency_ms": {
+    "legacy": {
+      "p50": 0.191,
+      "p95": 0.307
+    },
+    "langgraph": {
+      "p50": 2.117,
+      "p95": 2.801
+    }
+  },
+  "routes": [
+    {
+      "case": "recommend",
+      "status": "ok",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "replace_third",
+      "status": "ok",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "preserve_constraints",
+      "status": "ok",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "clear_runtime",
+      "status": "ok",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "clarify",
+      "status": "clarify",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "clarify",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "reset",
+      "status": "ok",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "reset",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "explain",
+      "status": "ok",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "explain_previous",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "reference_movie",
+      "status": "no_results",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "missing_reference",
+      "status": "clarify",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "no_results",
+      "status": "no_results",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "component_degraded",
+      "status": "degraded",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "changed_facts",
+      "status": "no_results",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "case": "deleted_movie",
+      "status": "no_results",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    }
+  ],
+  "limitations": [
+    "Fixture latency measures local orchestration overhead, not application P95.",
+    "Equal outputs do not establish retrieval relevance or real LLM quality."
+  ]
+}

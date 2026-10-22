@@ -21,11 +21,14 @@ backend/
 │   │                                  recommendations、ratings、search、
 │   │                                  users、genres、people、stats、health
 │   ├── agent/
-│   │   ├── orchestrator.py             会话动作编排与提交
+│   │   ├── orchestrator.py             归属、消息幂等、版本条件更新与提交
+│   │   ├── workflow.py                 单轮 LangGraph 图与显式编排切换
+│   │   ├── legacy_turn.py              改造前单轮流程，对照与回退基线
+│   │   ├── turn_runtime.py             请求级依赖与节点耗时
 │   │   ├── schemas.py                  意图、约束、状态、动作契约
 │   │   ├── llm_client.py               LLM / 规则解析与错误分类
 │   │   ├── prompts.py                  意图提示词
-│   │   ├── session_service.py          会话持久化、幂等与 CAS
+│   │   ├── session_service.py          条件补丁白名单、清除与位置替换
 │   │   ├── tools.py                    指代解析与受控推荐工具
 │   │   ├── explanation_service.py      电影事实模板与证据
 │   │   └── timeouts.py                 跨层超时预算
@@ -60,7 +63,7 @@ backend/
 └── Dockerfile.local
 ```
 
-会话存储逻辑在 `app/agent/session_service.py`，不是设计草案中的独立 repositories 目录。接口当前走 `/api` 前缀。当前解释为事实模板，没有额外部署自由生成的解释模型。
+会话状态补丁在 `app/agent/session_service.py`，持久化、幂等和 CAS 在 `app/agent/orchestrator.py`。接口当前走 `/api` 前缀。当前解释为事实模板，没有额外部署自由生成的解释模型。单轮图和对照方法见 [LangGraph 改造](agent-v1/langgraph-refactor.md)。
 
 ## 语义服务与前端
 
@@ -145,6 +148,6 @@ frontend/
 | [implementation-plan](agent-v1/implementation-plan.md) | V1 阶段计划与实现边界 |
 | [acceptance](agent-v1/acceptance.md) | V1 验收设计与指标口径 |
 | [评估数据说明](../evaluation/datasets/README.md) | fixture 与待人工审核查询的区别 |
-| [视频说明](media/README.md) | 截图剪辑、旁白、字幕与视频重建 |
+| [界面截图](media/README.md) | 统一样式后的实际页面；旧视频制作产物仅作历史保留 |
 | [video-plan.json](media/video-plan.json) / [video-manifest.json](media/video-manifest.json) | 分镜、旁白、时长和编码信息 |
 | [第三方说明](../THIRD_PARTY_NOTICES.md) | 上游代码、数据、模型与素材条款 |

@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="min-h-screen bg-white">
-    <Header v-if="route.name !== 'ChatRecommend'" />
+    <Header />
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />
@@ -11,8 +11,6 @@
 
 <script setup>
 import Header from './components/Header.vue'
-import { useRoute } from 'vue-router'
-const route = useRoute()
 </script>
 
 <style>

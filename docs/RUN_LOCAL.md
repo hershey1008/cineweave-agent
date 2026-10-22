@@ -1,5 +1,7 @@
 # 本地运行与演示
 
+2026-10-22 更新：默认使用 LangGraph 单轮编排；原流程可通过 `AGENT_ORCHESTRATOR=legacy` 显式切换，配置后重新创建后端容器。接口、推荐流水线和 PostgreSQL 会话提交边界保留。对照步骤见 [LangGraph 改造](agent-v1/langgraph-refactor.md)，当前展示见 [界面截图](media/README.md)。
+
 本应用用于本机回环地址演示。页面：`http://localhost:13000`；API 文档：`http://localhost:18000/docs`；语义服务健康：`http://localhost:18010/health`。
 
 ## 已准备的桌面项目

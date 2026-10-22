@@ -1,5 +1,6 @@
 """Small live LLM regression; uses synthetic demo requests, never prints credentials."""
 import json
+import os
 import time
 import uuid
 from pathlib import Path
@@ -54,6 +55,14 @@ def run():
                     'runtime_state':state['runtime_max']==(120 if i<3 else None),
                     'hard_filters':all('Sci-Fi' in m['genres'] and 'Horror' not in m['genres']
                         and (state['runtime_max'] is None or (m.get('runtime_minutes') and m['runtime_minutes']<=120)) for m in items)}
+                orchestration = data.get('trace', {}).get('orchestration', {})
+                nodes = [node['node'] for node in orchestration.get('nodes', [])]
+                expected = os.getenv('EXPECTED_ORCHESTRATOR', 'langgraph')
+                checks['orchestration_backend'] = orchestration.get('backend') == expected
+                if expected == 'langgraph':
+                    checks['graph_route'] = (nodes[:2] == ['parse_intent', 'apply_intent']
+                        and nodes[-1:] == ['assemble_response']
+                        and ('recheck_facts' in nodes) == (i < 4))
                 if i==2:
                     replaced=previous[2]
                 if i>=2:
@@ -61,6 +70,7 @@ def run():
                 if i==4:
                     checks['explains_previous_first']=len(items)==1 and items[0]['movie_id']==previous[0]
                 row.update(status=data['status'],parser_mode=data['parser_mode'],llm_calls=llm.get('calls'),llm_tokens=llm.get('tokens'),
+                    orchestration=orchestration.get('backend'), nodes=nodes,
                     llm_elapsed_ms=llm.get('elapsed_ms'),checks=checks,passed=all(checks.values()),
                     items=[{'title':m['title'],'runtime_minutes':m['runtime_minutes']} for m in items])
                 print(json.dumps(row,ensure_ascii=True),flush=True)

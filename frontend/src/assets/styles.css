@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --cw-blue: #2569b2;
+  --cw-blue-hover: #1d4ed8;
+  --cw-blue-soft: #eff6ff;
+  --cw-ink: #1f2937;
+  --cw-muted: #6b7280;
+  --cw-line: #e5e7eb;
+  --cw-surface: #f9fafb;
+  --cw-header-height: 80px;
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, 'Microsoft YaHei', sans-serif;
+}
+
+.site-nav-link {
+  padding: 8px 0;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav-link.router-link-exact-active {
+  color: var(--cw-blue);
+  border-bottom-color: var(--cw-blue);
+  font-weight: 600;
+}
+
 /* 电影横向滚动行的自定义滚动条样式 */
 .movie-row-container::-webkit-scrollbar {
   height: 8px;

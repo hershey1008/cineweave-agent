@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-22",
+  "command": "docker compose exec -T backend python -m scripts.verify_failure_modes",
+  "scope": "Isolated process dependency overrides; running services unchanged",
+  "cases": 2,
+  "passed": 2,
+  "results": [
+    {
+      "persona": "new",
+      "status": "degraded",
+      "items": 3,
+      "degraded_components": ["semantic:ConnectError"],
+      "hard_filters_passed": true,
+      "postgres_persisted": true,
+      "idempotent_replay": true
+    },
+    {
+      "persona": "history",
+      "status": "degraded",
+      "items": 3,
+      "degraded_components": ["semantic:ConnectError", "deepfm:RuntimeError"],
+      "hard_filters_passed": true,
+      "postgres_persisted": true,
+      "idempotent_replay": true
+    }
+  ]
+}

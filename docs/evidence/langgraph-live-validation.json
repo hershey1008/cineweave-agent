@@ -1,0 +1,223 @@
+{
+  "protocol": "live_llm_five_turn_regression_v2",
+  "turns": [
+    {
+      "turn": 1,
+      "http_status": 200,
+      "elapsed_seconds": 9.28,
+      "status": "ok",
+      "parser_mode": "llm",
+      "llm_calls": 1,
+      "llm_tokens": 852,
+      "llm_elapsed_ms": 8636.7,
+      "checks": {
+        "llm_used": true,
+        "ok": true,
+        "has_results": true,
+        "genres_retained": true,
+        "runtime_state": true,
+        "hard_filters": true,
+        "orchestration_backend": true,
+        "graph_route": true,
+        "persisted_response_matches_run": true
+      },
+      "passed": true,
+      "items": [
+        {
+          "title": "Galaxy Quest",
+          "runtime_minutes": 102
+        },
+        {
+          "title": "Titan A.E.",
+          "runtime_minutes": 94
+        },
+        {
+          "title": "Mission to Mars",
+          "runtime_minutes": 114
+        }
+      ],
+      "orchestration": "langgraph",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "turn": 2,
+      "http_status": 200,
+      "elapsed_seconds": 7.06,
+      "status": "ok",
+      "parser_mode": "llm",
+      "llm_calls": 1,
+      "llm_tokens": 967,
+      "llm_elapsed_ms": 6638.85,
+      "checks": {
+        "llm_used": true,
+        "ok": true,
+        "has_results": true,
+        "genres_retained": true,
+        "runtime_state": true,
+        "hard_filters": true,
+        "orchestration_backend": true,
+        "graph_route": true,
+        "persisted_response_matches_run": true
+      },
+      "passed": true,
+      "items": [
+        {
+          "title": "Galaxy Quest",
+          "runtime_minutes": 102
+        },
+        {
+          "title": "Mission to Mars",
+          "runtime_minutes": 114
+        },
+        {
+          "title": "Titan A.E.",
+          "runtime_minutes": 94
+        }
+      ],
+      "orchestration": "langgraph",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "turn": 3,
+      "http_status": 200,
+      "elapsed_seconds": 5.0,
+      "status": "ok",
+      "parser_mode": "llm",
+      "llm_calls": 1,
+      "llm_tokens": 812,
+      "llm_elapsed_ms": 4843.75,
+      "checks": {
+        "llm_used": true,
+        "ok": true,
+        "has_results": true,
+        "genres_retained": true,
+        "runtime_state": true,
+        "hard_filters": true,
+        "replacement_retained": true,
+        "orchestration_backend": true,
+        "graph_route": true,
+        "persisted_response_matches_run": true
+      },
+      "passed": true,
+      "items": [
+        {
+          "title": "Galaxy Quest",
+          "runtime_minutes": 102
+        },
+        {
+          "title": "Mission to Mars",
+          "runtime_minutes": 114
+        },
+        {
+          "title": "E.T. the Extra-Terrestrial",
+          "runtime_minutes": 115
+        }
+      ],
+      "orchestration": "langgraph",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "turn": 4,
+      "http_status": 200,
+      "elapsed_seconds": 4.38,
+      "status": "ok",
+      "parser_mode": "llm",
+      "llm_calls": 1,
+      "llm_tokens": 810,
+      "llm_elapsed_ms": 4238.56,
+      "checks": {
+        "llm_used": true,
+        "ok": true,
+        "has_results": true,
+        "genres_retained": true,
+        "runtime_state": true,
+        "hard_filters": true,
+        "replacement_retained": true,
+        "orchestration_backend": true,
+        "graph_route": true,
+        "persisted_response_matches_run": true
+      },
+      "passed": true,
+      "items": [
+        {
+          "title": "2001: A Space Odyssey",
+          "runtime_minutes": 149
+        },
+        {
+          "title": "Galaxy Quest",
+          "runtime_minutes": 102
+        },
+        {
+          "title": "Mission to Mars",
+          "runtime_minutes": 114
+        }
+      ],
+      "orchestration": "langgraph",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "recommend",
+        "recheck_facts",
+        "assemble_response"
+      ]
+    },
+    {
+      "turn": 5,
+      "http_status": 200,
+      "elapsed_seconds": 4.3,
+      "status": "ok",
+      "parser_mode": "llm",
+      "llm_calls": 1,
+      "llm_tokens": 805,
+      "llm_elapsed_ms": 4278.98,
+      "checks": {
+        "llm_used": true,
+        "ok": true,
+        "has_results": true,
+        "genres_retained": true,
+        "runtime_state": true,
+        "hard_filters": true,
+        "replacement_retained": true,
+        "explains_previous_first": true,
+        "orchestration_backend": true,
+        "graph_route": true,
+        "persisted_response_matches_run": true
+      },
+      "passed": true,
+      "items": [
+        {
+          "title": "2001: A Space Odyssey",
+          "runtime_minutes": 149
+        }
+      ],
+      "orchestration": "langgraph",
+      "nodes": [
+        "parse_intent",
+        "apply_intent",
+        "explain_previous",
+        "assemble_response"
+      ]
+    }
+  ],
+  "passed": true,
+  "evidence_note": "Graph routes audited from the persisted responses of the same five-turn run; no repeated model calls.",
+  "session_version_after_five_turns": 5
+}

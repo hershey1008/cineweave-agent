@@ -4,14 +4,14 @@
 
 [![Tests](https://github.com/hershey1008/cineweave-agent/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/hershey1008/cineweave-agent/actions/workflows/unit-tests.yml)
 [![License](https://img.shields.io/badge/license-CC_BY--NC--SA_4.0-lightgrey)](LICENSE)
-[演示视频](https://github.com/hershey1008/cineweave-agent/releases/tag/v0.1.0-demo)
+[界面截图](docs/media/README.md) · [LangGraph 改造与对照](docs/agent-v1/langgraph-refactor.md)
 
 用自然语言选片，继续修改条件、替换已看电影、查看推荐依据。支持多路召回、DeepFM 排序、会话条件更新、反馈和运行追踪。
 
-[![应用界面](docs/media/demo-poster.jpg)](https://github.com/hershey1008/cineweave-agent/releases/tag/v0.1.0-demo)
+![对话选片界面](docs/media/screenshots/langgraph/02-chat-welcome.jpg)
 
 ```text
-Vue → FastAPI → LLM 结构化意图 → 会话与硬过滤
+Vue → FastAPI → LangGraph 单轮编排 → LLM 结构化意图 → 会话与硬过滤
     → BGE-M3 / YouTubeDNN / I2I / 类型偏好 → 融合排序 → 事实解释
 存储：PostgreSQL · Redis · Elasticsearch
 ```
@@ -114,7 +114,7 @@ cineweave-agent/
 │   └── tests/            语义索引测试
 ├── frontend/             Vue / Vite 页面、状态、接口与 Nginx
 ├── evaluation/           对话用例、检索查询与评估脚本
-├── scripts/              配置、数据打包/恢复、模型下载、启停与视频制作
+├── scripts/              配置、数据打包/恢复、模型下载与启停
 ├── docs/                 运行、架构、契约、验收、来源与演示
 ├── licenses/             完整许可文本
 ├── .github/workflows/    Python 测试与前端构建 CI
@@ -128,6 +128,8 @@ cineweave-agent/
 | [数据与模型](docs/DATA_AND_MODELS.md) | 本地快照、打包/恢复、模型格式和分发状态 |
 | [实际项目结构与全部文档](docs/PROJECT_STRUCTURE.md) | 模块、关键文件、运行产物及完整文档索引 |
 | [架构](docs/agent-v1/architecture.md) / [接口契约](docs/agent-v1/contracts.md) | 推荐链路、状态与 API |
+| [LangGraph 改造与对照](docs/agent-v1/langgraph-refactor.md) | 单轮图、原流程切换、固定输入对照与结果边界 |
+| [界面截图](docs/media/README.md) | 统一风格后的电影库、对话选片与运行详情 |
 | [本地演示](docs/RUN_LOCAL.md) / [验收记录](docs/LOCAL_VALIDATION.md) | 演示步骤与已有实测口径 |
 | [数据来源](docs/provenance.md) / [第三方说明](THIRD_PARTY_NOTICES.md) | 数据字段、来源和许可 |
 

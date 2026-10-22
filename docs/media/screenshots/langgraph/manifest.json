@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-22",
+  "capture": "Actual local application through the connected in-app browser",
+  "screenshots": [
+    {
+      "file": "docs/media/screenshots/langgraph/01-browse.jpg",
+      "width": 1351,
+      "height": 890,
+      "format": "JPEG",
+      "sha256": "f2fb06b51e3d8a71cc9b352b9494c19b311c31e52497fd3b1635a226880f7dd7"
+    },
+    {
+      "file": "docs/media/screenshots/langgraph/02-chat-welcome.jpg",
+      "width": 1351,
+      "height": 890,
+      "format": "JPEG",
+      "sha256": "e2c709c630d4b52b683872aecb5d8541d865e9ebb5942b4ff8cedc521d063649"
+    },
+    {
+      "file": "docs/media/screenshots/langgraph/03-recommendations-trace.jpg",
+      "width": 1351,
+      "height": 890,
+      "format": "JPEG",
+      "sha256": "fb806b62d4c94f6d4d2315799ca1742eba421db05a805c8e694256dfb1db94f5"
+    },
+    {
+      "file": "docs/media/screenshots/langgraph/04-movie-evidence.jpg",
+      "width": 1351,
+      "height": 890,
+      "format": "JPEG",
+      "sha256": "50c34c477d7a7cce95c67863e140a3b4222b3fcbebfcd8ee79bc9d26232ab306"
+    },
+    {
+      "file": "docs/media/screenshots/langgraph/05-mobile-recommendations.jpg",
+      "width": 375,
+      "height": 811,
+      "format": "JPEG",
+      "sha256": "b78c6ad305153eb5062c0a36e74339d214ac602b5a5c2cbe25add63624a9bf7e"
+    },
+    {
+      "file": "docs/media/screenshots/langgraph/06-mobile-trace.jpg",
+      "width": 375,
+      "height": 811,
+      "format": "JPEG",
+      "sha256": "f6d43b6f30cb9d1b03f4caf226e5b0f1df70cdf86ba77628c1ff58e460385266"
+    }
+  ],
+  "viewport_checks": [
+    {
+      "width": 1366,
+      "height": 900,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontal_overflow": false
+    }
+  ],
+  "verified_interactions": [
+    "shared navigation",
+    "session restore after reload",
+    "mobile new session",
+    "recommendation request",
+    "like feedback",
+    "movie detail and evidence",
+    "desktop and mobile graph trace"
+  ],
+  "new_video_created": false
+}

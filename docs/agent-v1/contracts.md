@@ -1,5 +1,7 @@
 # 接口、会话状态与存储契约
 
+2026-10-22：LangGraph 改造保留现有 HTTP 请求与业务响应字段，新增可选追踪字段 `trace.orchestration = {backend, nodes: [{node, elapsed_ms}]}`。现有 `state_version`、消息幂等与会话归属校验继续由业务入口执行，图未启用 checkpoint。实现和对照见 [改造说明](langgraph-refactor.md)。
+
 状态：V1 设计契约。当前本地实现情况见 [运行说明](../RUN_LOCAL.md) 和 [验收记录](../LOCAL_VALIDATION.md)。路由沿用现有 FunRec 的 `/api` 前缀。
 
 ## 1. 外部 API
